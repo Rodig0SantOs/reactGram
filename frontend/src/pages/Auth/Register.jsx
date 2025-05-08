@@ -1,8 +1,8 @@
-/* eslint-disable no-unused-vars */
 import "./Auth.css";
 
 // Components
 import { Link } from "react-router";
+import Message from "../../components/Message/Message";
 
 // Hooks
 import { useEffect, useState } from "react";
@@ -71,7 +71,9 @@ const Register = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
           value={confirmPassword || ""}
         />
-        <input type="submit" value="Cadastrar" />
+        {!loading && <input type="submit" value="Cadastrar" />}
+        {loading && <input type="submit" value="Aguarde..." disabled />}
+        {error && <Message msg={error} type="error" />}
       </form>
 
       <p>

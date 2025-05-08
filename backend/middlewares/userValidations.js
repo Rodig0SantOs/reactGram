@@ -11,7 +11,6 @@ const userCreateValidation = () => {
       .isString()
       .withMessage("O email é obrigatório.")
       .isEmail()
-      .isLength({ max: 50 })
       .withMessage("Insira um e-mail válido"),
     body("password")
       .isString()

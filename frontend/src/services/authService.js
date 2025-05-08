@@ -5,24 +5,50 @@ const register = async (data) => {
   const config = requestConfig("POST", data);
 
   try {
-    const response = await fetch(api + "/users/register", config);
+    const res = await fetch(api + "/users/register", config)
+      .then((res) => res.json())
+      .catch((err) => err);
 
-    // Verifica se a resposta foi bem-sucedida
-    if (!response.ok) {
-      throw new Error(`Erro HTTP! Status: ${response.status}`);
+    if (res) {
+      localStorage.setItem("user", JSON.stringify(res));
     }
 
-    const res = await response.json();
-    localStorage.setItem("user", JSON.stringify(res));
     return res; // Retorna a resposta para que a chamada possa processá-la
   } catch (error) {
-    console.log("Erro ao registrar o usuário:", error.message);
-    throw error; // Lança o erro para ser tratado externamente
+    console.log("Erro ao registrar o usuário:", error);
+  }
+};
+
+// Logout an user
+const logout = () => {
+  localStorage.removeItem("user");
+};
+
+// Sign in an user
+const login = async (data) => {
+  const config = requestConfig("POST", data);
+
+  try {
+    const res = await fetch(api + "/users/login", config)
+      .then((res) => res.json())
+      .catch((err) => err);
+
+    console.log(res);
+
+    if (res._id) {
+      localStorage.setItem("user", JSON.stringify(res));
+    }
+
+    return res; // Retorna a resposta para que a chamada possa processá-la
+  } catch (error) {
+    console.log("Erro ao fazer login:", error);
   }
 };
 
 const authService = {
   register,
+  logout,
+  login,
 };
 
 export default authService;

@@ -1,5 +1,8 @@
-export const api = "http://localhost:5000/api";
-export const uploads = "http://localhost:5000/uploads";
+/* export const api = "http://localhost:5000/api";
+export const uploads = "http://localhost:5000/uploads"; */
+
+export const api = "process.env.REACT_APP_API_URL";
+export const uploads = "process.env.REACT_APP_UPLOADS";
 
 export const requestConfig = (method, data, token = null, image = null) => {
   let config;
@@ -19,7 +22,7 @@ export const requestConfig = (method, data, token = null, image = null) => {
     config = {
       method,
       body: JSON.stringify(data),
-      mode: "no-cors",
+      /* mode: "no-cors", */
       headers: {
         "Content-Type": "application/json",
       },
